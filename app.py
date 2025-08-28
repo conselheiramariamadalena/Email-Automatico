@@ -74,10 +74,10 @@ def enviar_emails(lista_destinatarios):
         return False, f"Ocorreu um erro inesperado: {e}"
 
 # --- Interface do App Streamlit ---
+st.set_page_config(layout="centered", page_title="Disparador de E-mail")
 senha = st.text_input("Digite a senha para continuar:", type="password")
 
 if senha == st.secrets["senha"]:
-    st.set_page_config(layout="centered", page_title="Disparador de E-mail")
     st.title("💌 Disparador de Convites da Maria Madalena IA")
     st.write("Cole a lista de e-mails abaixo (um por linha ou separados por vírgula/espaço) para enviar os convites.")
 
