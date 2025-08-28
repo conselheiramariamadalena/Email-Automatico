@@ -59,7 +59,7 @@ def enviar_emails(lista_destinatarios):
     msg.set_content(corpo_texto)
     msg.add_alternative(corpo_html, subtype='html')
 
-    caminho_imagem = 'conselheiramariamadalena/Email-Automatico/Arquivos/mariamada.jpg'
+    caminho_imagem = 'Arquivos/mariamada.jpg'
     maintype, subtype = mimetypes.guess_type(caminho_imagem)[0].split('/')
     with open(caminho_imagem, 'rb') as img_file:
         msg.get_payload()[1].add_related(img_file.read(), maintype=maintype, subtype=subtype, cid='image1')
