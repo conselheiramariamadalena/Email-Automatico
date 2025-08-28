@@ -37,7 +37,7 @@ def enviar_emails(lista_destinatarios):
                             <img src="cid:image1" alt="Maria Madalena IA" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #d63384; object-fit: cover;">
                         </td>
                         <td align="left" style="padding-left: 10px; vertical-align: middle;">
-                            <a href="https://mariamadalena.streamlit.app" class="cta-button">Conversar com a<br>Maria Madalena!</a>
+                            <a href="https://mariamadalenai.streamlit.app" class="cta-button">Conversar com a<br>Maria Madalena!</a>
                         </td>
                     </tr>
                 </table>
@@ -74,30 +74,33 @@ def enviar_emails(lista_destinatarios):
         return False, f"Ocorreu um erro inesperado: {e}"
 
 # --- Interface do App Streamlit ---
-st.set_page_config(layout="centered", page_title="Disparador de E-mail")
-st.title("💌 Disparador de Convites da Maria Madalena IA")
-st.write("Cole a lista de e-mails abaixo (um por linha ou separados por vírgula/espaço) para enviar os convites.")
+senha = st.text_area()
 
-emails_input = st.text_area(
-    "Lista de E-mails:",
-    height=200
-)
+if senha == st.secrets["senha"]:
+    st.set_page_config(layout="centered", page_title="Disparador de E-mail")
+    st.title("💌 Disparador de Convites da Maria Madalena IA")
+    st.write("Cole a lista de e-mails abaixo (um por linha ou separados por vírgula/espaço) para enviar os convites.")
 
-if st.button("Enviar Convites em Massa", use_container_width=True):
-    if emails_input:
-        # Extrai todos os e-mails válidos do texto, ignorando o que não for e-mail
-        lista_emails = re.findall(r'[\w\.-]+@[\w\.-]+', emails_input)
-        
-        if lista_emails:
-            with st.spinner(f"Enviando {len(lista_emails)} convites... Por favor, aguarde."):
-                sucesso, mensagem = enviar_emails(lista_emails)
+    emails_input = st.text_area(
+        "Lista de E-mails:",
+        height=200
+    )
+
+    if st.button("Enviar Convites em Massa", use_container_width=True):
+        if emails_input:
+            # Extrai todos os e-mails válidos do texto, ignorando o que não for e-mail
+            lista_emails = re.findall(r'[\w\.-]+@[\w\.-]+', emails_input)
             
-            if sucesso:
-                st.success(f"🎉 {mensagem}")
-                st.balloons()
+            if lista_emails:
+                with st.spinner(f"Enviando {len(lista_emails)} convites... Por favor, aguarde."):
+                    sucesso, mensagem = enviar_emails(lista_emails)
+                
+                if sucesso:
+                    st.success(f"🎉 {mensagem}")
+                    st.balloons()
+                else:
+                    st.error(f"🚨 {mensagem}")
             else:
-                st.error(f"🚨 {mensagem}")
+                st.warning("Nenhum endereço de e-mail válido foi encontrado no texto.")
         else:
-            st.warning("Nenhum endereço de e-mail válido foi encontrado no texto.")
-    else:
-        st.warning("Por favor, insira pelo menos um endereço de e-mail.")
+            st.warning("Por favor, insira pelo menos um endereço de e-mail.")
