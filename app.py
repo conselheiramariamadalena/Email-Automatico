@@ -74,7 +74,7 @@ def enviar_emails(lista_destinatarios):
         return False, f"Ocorreu um erro inesperado: {e}"
 
 # --- Interface do App Streamlit ---
-senha = st.text_area()
+senha = st.text_input("Digite a senha para continuar:", type="password")
 
 if senha == st.secrets["senha"]:
     st.set_page_config(layout="centered", page_title="Disparador de E-mail")
